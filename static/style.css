@@ -1,0 +1,54 @@
+#deck_game{
+    background-color: green;
+    width: 100% !important;
+    height: 500px !important;
+    padding: 15px 15px;
+}
+#deck_cards{
+    position: relative;
+    width: 100% !important;
+}
+.div_card{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    text-align: center !important;
+}
+
+
+#pokemon_game{
+    background-color: #F1F1F1;
+    width: 100% !important;
+    height: 500px !important;
+    padding: 15px 15px;
+    text-align: center !important;
+}
+#pokemon_cards{
+    padding-top: 40px;
+    width:auto;
+}
+.pokemon_card_div{
+    float: left;
+    border: 5px solid steelblue;
+    border-radius: 10px;
+    background-color: lightsteelblue;
+    width: 200px !important;
+    min-height: 250px !important;
+    padding: 10px 10px;
+    margin-right: 20px;
+}
+.pokemon_card_div div{
+    width: 100%;
+    text-align: center;
+}
+.pokemon_card_name{
+    font-size: 18px;
+    font-weight: bold;
+}
+.pokemon_card_image img{
+    height: 100px;
+}
+.pokemon_card_descrip{
+    font-size: 11px;
+}

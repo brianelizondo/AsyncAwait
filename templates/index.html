@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronous Code in JavaScript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="/static/app.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Part 1: Number Facts</h1>
+    <p class="fw-bold">1. Make a request to the Numbers API (http://numbersapi.com/) to get a fact about your favorite number. (Make sure you get back JSON by including the json query key, specific to this API.</p>
+    <div class="mb-5" id="part_1_1"></div>
+
+    <p class="fw-bold">2. Figure out how to get data on multiple numbers in a single request. Make that request and when you get the data back, put all of the number facts on the page.</p>
+    <div class="mb-5" id="part_1_2"></div>
+
+    <p class="fw-bold">3. Use the API to get 4 facts on your favorite number. Once you have them all, put them on the page. It’s okay if some of the facts are repeats..</p>
+    <div class="mb-5" id="part_1_3"></div>
+
+
+    <h1 class="mt-2">Part 2: Deck of Cards</h1>
+    <p class="fw-bold">1. Make a request to the Deck of Cards API to request a single card from a newly shuffled deck. Once you have the card, console.log the value and the suit (e.g. "5 of spades", "queen of diamonds").</p>
+    <div class="mb-5" id="part_2_1"></div>
+
+    <p class="fw-bold">2. Make a request to the deck of cards API to request a single card from a newly shuffled deck. Once you have the card, make a request to the same API to get one more card from the same deck. Once you have both cards, console.log the values and suits of both cards.</p>
+    <div class="mb-5" id="part_2_2"></div>
+
+    <p class="fw-bold">3. Build an HTML page that lets you draw cards from a deck. When the page loads, go to the Deck of Cards API to create a new deck, and show a button on the page that will let you draw a card. Every time you click the button, display a new card, until there are no cards left in the deck.</p>
+    <div class="mb-5" id="part_2_3">
+        <div id="deck_game">
+            <div class="text-center">
+                <button id="get_card_button" type="button" class="btn btn-dark">GIMME A CARD!</button>
+            </div>
+            <div id="deck_cards"></div>
+        </div>
+    </div>
+
+
+    <h1 class="mt-5">Futher Study</h1>
+    <p class="fw-bold">1. Figure out how to make a single request to the Pokemon API to get names and URLs for every pokemon in the database.</p>
+    <div class="mb-5" id="part_3_1"></div>
+
+    <p class="fw-bold">2. Once you have names and URLs of all the pokemon, pick three at random and make requests to their URLs. Once those requests are complete, console.log the data for each pokemon.</p>
+    <div class="mb-5" id="part_3_2"></div>
+
+    <p class="fw-bold">3. Start with your code from 2, but instead of logging the data on each random pokemon, store the name of the pokemon in a variable and then make another request, this time to that pokemon's species URL (you should see a key of species in the data). Once that request comes back, look in the flavor_text_entries key of the response data for a description of the species written in English. If you find one, console.log the name of the pokemon along with the description you found.
+
+    Example: "ducklett: They are better at swimming than flying, and they happily eat their favorite food, peat moss, as they dive underwater."</p>
+    <div class="mb-5" id="part_3_3"></div>
+
+    <p class="fw-bold">4. BONUS Instead of relying on console.log, let's create a UI for these random pokemon. Build an HTML page that lets you click on a button to generate data from three randomly chosen pokemon. Include the name of the pokemon, an image of the pokemon, and the description of its species which you found in 3.</p>
+    <div class="mb-5" id="part_3_4">
+        <div id="pokemon_game">
+            <div class="text-center">
+                <button id="get_pokemon_button" type="button" class="btn btn-danger">GOTTA CATCH EM ALL</button>
+            </div>
+            <div id="pokemon_cards"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
