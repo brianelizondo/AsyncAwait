@@ -198,31 +198,30 @@ $(document).ready(function(){
     // If you find one, console.log the name of the pokemon along with the description you found.
     // Example: "ducklett: They are better at swimming than flying, and they happily eat their favorite food, peat moss, as they dive underwater."
     let div_show_3_3 = "part_3_3";
-    
-    for(let i = 1; i <= random_pokemons; i++){
-        let index = Math.floor(Math.random() * (898 + 1));
-        let pokemon_name = null;
 
-        let getPokemonURL = `https://pokeapi.co/api/v2/pokemon/${index}/`;
-        let getPokemonPromise = axios.get(getPokemonURL);
-        getPokemonPromise
-            .then(resp_1 => {
-                pokemon_name = resp_1.data.name;
-                pokemon_species_url = resp_1.data.species['url'];
-                
-                return axios.get(pokemon_species_url);
-            })
-            .then(resp_2 => {
-                let flavor_description = "description not found";
-                for(entrie of resp_2.data.flavor_text_entries){
-                    if(entrie["language"]["name"] == "en"){
-                        flavor_description = entrie["flavor_text"];
-                    }
+    async function getPokemons(id){
+        try{
+            let getPokemonURL = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+            let pokemon = await axios.get(getPokemonURL);
+            
+            let pokemon_name = pokemon.data.name;
+            let pokemon_species = await axios.get(pokemon.data.species['url']);
+            
+            let flavor_description = "description not found";
+            for(entrie of pokemon_species.data.flavor_text_entries){
+                if(entrie["language"]["name"] == "en"){
+                            flavor_description = entrie["flavor_text"];
                 }
-                showResponse(div_show_3_3, `<b>${pokemon_name}:</b> ${flavor_description}`);
-                console.log(`${pokemon_name}: ${flavor_description}`);
-            })
-            .catch(err => console.log(err));
+            }
+            showResponse(div_show_3_3, `<b>${pokemon_name}:</b> ${flavor_description}`);
+            console.log(`${pokemon_name}: ${flavor_description}`);
+        } catch (err){
+            console.log(err);
+        }
+    }
+    for(let i = 1; i <= random_pokemons; i++){
+        let id = Math.floor(Math.random() * (898 + 1));
+        getPokemons(id);
     }
 
 
