@@ -44,19 +44,24 @@ $(document).ready(function(){
     // 3. Use the API to get 4 facts on your favorite number. Once you have them all, put them on the page. 
     // It’s okay if some of the facts are repeats.    
     let div_show_1_3 = "part_1_3";
-    let getFactsURL = "http://numbersapi.com/random";
-    let getFactsPromise = [];
+    
+    async function getFacts(){
+        try {
+            let getFactsURL = "http://numbersapi.com/random";
+            let facts = await Promise.all([
+                axios.get(getFactsURL),
+                axios.get(getFactsURL),
+                axios.get(getFactsURL),
+                axios.get(getFactsURL)
+            ]);
 
-    for (let i = 1; i < 5; i++){
-        getFactsPromise.push(axios.get(getFactsURL));
+            facts.forEach(resp => showResponse(div_show_1_3, resp.data));
+        } catch (err){
+            showResponse(div_show_1_3, err);
+        }
     }
-        
-    Promise.all(getFactsPromise)
-        .then(getFactsArr => (
-            getFactsArr.forEach(resp => showResponse(div_show_1_3, resp.data))
-        ))
-        .catch(err => showResponse(div_show_1_3, err));
-
+    getFacts();
+    
 
     // Part 2: Deck of Cards
     // 1. Make a request to the Deck of Cards API to request a single card from a newly shuffled deck. 
