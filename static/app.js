@@ -239,34 +239,33 @@ $(document).ready(function(){
         `);
         z_index_pos += 1;
     }
+    async function getPokemonCard(id){
+        try{
+            let getPokemonURL = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+            let pokemon = await axios.get(getPokemonURL);
+            
+            let pokemon_name = pokemon.data.name;
+            let pokemon_img_url = pokemon.data.sprites.front_default;
+            let pokemon_species = await axios.get(pokemon.data.species['url']);
+            
+            let pokemon_description = "description not found";
+            for(entrie of pokemon_species.data.flavor_text_entries){
+                if(entrie["language"]["name"] == "en"){
+                    pokemon_description = entrie["flavor_text"];
+                }
+            }
+            appendPokemonCard(pokemon_name, pokemon_description, pokemon_img_url);
+        } catch (err){
+            console.log(err);
+        }
+    }
     $("#get_pokemon_button").on("click", function(){
         $("#pokemon_cards").empty();
         let random_pokemons = 3;
 
         for(let i = 1; i <= random_pokemons; i++){
-            let index = Math.floor(Math.random() * (898 + 1));
-            let pokemon_name = null;
-            let pokemon_description = "description not found";
-            let pokemon_img_url = null;
-    
-            let getPokemonURL = `https://pokeapi.co/api/v2/pokemon/${index}/`;
-            let getPokemonPromise = axios.get(getPokemonURL);
-            getPokemonPromise
-                .then(resp_1 => {
-                    pokemon_name = resp_1.data.name;
-                    pokemon_species_url = resp_1.data.species['url'];
-                    pokemon_img_url = resp_1.data.sprites.front_default;
-                    return axios.get(pokemon_species_url);
-                })
-                .then(resp_2 => {
-                    for(entrie of resp_2.data.flavor_text_entries){
-                        if(entrie["language"]["name"] == "en"){
-                            pokemon_description = entrie["flavor_text"];
-                        }
-                    }
-                    appendPokemonCard(pokemon_name, pokemon_description, pokemon_img_url);
-                })
-                .catch(err => console.log(err));
+            let id = Math.floor(Math.random() * (898 + 1));
+            getPokemonCard(id)
         }
     });
 });
