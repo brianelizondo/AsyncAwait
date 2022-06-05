@@ -177,17 +177,19 @@ $(document).ready(function(){
     let div_show_3_2 = "part_3_2";
     let random_pokemons = 3;
 
+    async function randomPokemon(id){
+        try{
+            let getPokemonURL = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+            let response = await axios.get(getPokemonURL);
+            console.log(response.data);
+            showResponse(div_show_3_2, `Pokemon ID: ${id} / Name: ${response.data.name}`);
+        } catch (err){
+            console.log(err);
+        }
+    }
     for(let i = 1; i <= random_pokemons; i++){
-        let index = Math.floor(Math.random() * (898 + 1));
-
-        let getPokemonURL = `https://pokeapi.co/api/v2/pokemon/${index}/`;
-        let getPokemonPromise = axios.get(getPokemonURL);
-        getPokemonPromise
-            .then(resp => {
-                console.log(resp.data);
-                showResponse(div_show_3_2, `Pokemon ID: ${index} / Name: ${resp.data.name}`);
-            })
-            .catch(err => console.log(err));
+        let id = Math.floor(Math.random() * (898 + 1));
+        randomPokemon(id);
     }
 
 
