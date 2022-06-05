@@ -61,46 +61,57 @@ $(document).ready(function(){
         }
     }
     getFacts();
-    
+
 
     // Part 2: Deck of Cards
     // 1. Make a request to the Deck of Cards API to request a single card from a newly shuffled deck. 
     // Once you have the card, console.log the value and the suit (e.g. “5 of spades”, “queen of diamonds”).
     let div_show_2_1 = "part_2_1";
-    let pickCardURL = "http://deckofcardsapi.com/api/deck/new/draw/?count=1";
-    let pickCardPromise = axios.get(pickCardURL);
-
-    pickCardPromise
-        .then(resp => {
-            let card_data = `${resp.data.cards[0].value} ${resp.data.cards[0].suit}`;
+    
+    async function pickCard(){
+        try{
+            let pickCardURL = "http://deckofcardsapi.com/api/deck/new/draw/?count=1";
+            let response = await axios.get(pickCardURL);
+            let card_data = `${response.data.cards[0].value} ${response.data.cards[0].suit}`;
             showResponse(div_show_2_1, card_data);
             console.log(card_data);
-        })
-        .catch(err => showResponse(div_show_2_1, err));
+        } catch (err){
+            showResponse(div_show_2_1, err);
+        }
+    }
+    pickCard();
+
 
 
     // 2. Figure out how to get data on multiple numbers in a single request. 
     // Make that request and when you get the data back, put all of the number facts on the page.
     // Once you have both cards, console.log the values and suits of both cards
     let div_show_2_2 = "part_2_2";
-    let pickCardsURL = "http://deckofcardsapi.com/api/deck/new/draw/?count=1";
-    let pickCardsPromise = axios.get(pickCardsURL);
 
-    pickCardsPromise
-        .then(resp_1 => {
-            let card_1_data = `${resp_1.data.cards[0].value} ${resp_1.data.cards[0].suit}`;
+    async function pickCards(){
+        try{
+            let deckURL = "http://deckofcardsapi.com/api/deck/new/draw/?count=1";
+            let response = await axios.get(deckURL);
+            const cards_deck = response.data.deck_id;
+
+            let pickCardsURL = `http://deckofcardsapi.com/api/deck/${cards_deck}/draw/?count=2`;
+            let cards_Promise = axios.get(pickCardsURL);
+
+            let cards = await cards_Promise;
+            
+            let card_1_data = `${cards.data.cards[0].value} ${cards.data.cards[0].suit}`;
+            let card_2_data = `${cards.data.cards[1].value} ${cards.data.cards[1].suit}`;
+
             showResponse(div_show_2_2, card_1_data);
-            console.log(card_1_data);
-            let deck_id = resp_1.data.deck_id;
-            return axios.get(`http://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`);
-        })
-        .then(resp_2 => {
-            let card_2_data = `${resp_2.data.cards[0].value} ${resp_2.data.cards[0].suit}`;
             showResponse(div_show_2_2, card_2_data);
+            console.log(card_1_data);
             console.log(card_2_data);
-        })
-        .catch(err => showResponse(div_show_2_2, err));
-
+        } catch (err){
+            showResponse(div_show_2_2, err);
+        }
+    }
+    pickCards();
+    
 
     // 3. Build an HTML page that lets you draw cards from a deck. 
     // When the page loads, go to the Deck of Cards API to create a new deck, and show a button on the page that will let you draw a card. 
