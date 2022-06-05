@@ -145,30 +145,31 @@ $(document).ready(function(){
     // 1. Figure out how to make a single request to the Pokemon API to get names and URLs for every pokemon in the database.
     // NOTE: The API returns a 404 error if it tries to request information on pokemon with IDs greater than 899
     let div_show_3_1 = "part_3_1";
-    let pokemonsURL = "https://pokeapi.co/api/v2/pokemon";
-    let pokemonsPromise = axios.get(pokemonsURL);
-    let pokemonsPromises = [];
-    var pokemonsData = [];
-
-    pokemonsPromise
-        .then(resp => {
-            showResponse(div_show_3_1, `<b>${resp.data.count} pokemons founds,</b> but the API returns a 404 error if it tries to request information on pokemon with IDs greater than 899`);
-
+    
+    async function pokemons(){
+        try {
+            let pokemonsURL = "https://pokeapi.co/api/v2/pokemon";
+            let pokemonsPromise = await axios.get(pokemonsURL);
+            let pokemonsPromises = [];
+            var pokemonsData = [];
+            
+            showResponse(div_show_3_1, `<b>${pokemonsPromise.data.count} pokemons founds,</b> but the API returns a 404 error if it tries to request information on pokemon with IDs greater than 899`);
+            
             for(let i = 1; i <= 898; i++){
                 pokemonsPromises.push(
                     axios.get(`https://pokeapi.co/api/v2/pokemon/${i}/`)
                 );
             }
+            let pokemonArr = await Promise.all(pokemonsPromises);
 
-            Promise.all(pokemonsPromises)
-                .then(pokemonArr => {
-                    for(res of pokemonArr){
-                        pokemonsData.push(res.data.species);
-                    }
-                })
-                .catch(err => console.log(err));
-        })
-        .catch(err => showResponse(div_show_3_1, err));
+            for(res of pokemonArr){
+                pokemonsData.push(res.data.species);
+            }
+        } catch (err){
+            showResponse(div_show_3_1, err);
+        }
+    }
+    pokemons();
 
     
     // 2. Once you have names and URLs of all the pokemon, pick three at random and make requests to their URLs. 
