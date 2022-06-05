@@ -126,19 +126,18 @@ $(document).ready(function(){
         $div_cards.append(`<div class="div_card" style="z-index:${z_index_pos}; padding-top:${padding_card}px;"><img src="${card_image_url}" style="transform: rotate(${rotate_deg}deg);"></div>`);
         z_index_pos += 1;
     }
-    $("#get_card_button").on("click", function(){
-        let pickCardURL = `http://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`;
-        let pickCardPromise = axios.get(pickCardURL);
-
-        pickCardPromise
-            .then(resp => {
-                appendCard(resp.data.cards[0].image);
-                deck_id = resp.data.deck_id;
-                if(resp.data.remaining == 0){
-                    $("#get_card_button").remove();
-                }
-            })
-            .catch(err => console.log(err));
+    $("#get_card_button").on("click", async function(){
+        try{
+            let pickCardURL = `http://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`;
+            let response = await axios.get(pickCardURL);
+            appendCard(response.data.cards[0].image);
+            deck_id = response.data.deck_id;
+            if(response.data.remaining == 0){
+                $("#get_card_button").remove();
+            }
+        } catch (err){
+            console.log(err);
+        }
     });
 
 
